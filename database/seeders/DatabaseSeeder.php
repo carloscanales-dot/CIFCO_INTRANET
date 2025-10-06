@@ -16,10 +16,13 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        // Seeder para roles y permisos
-        $this->call(RolesAndPermissionsSeeder::class);
+    // Seeder para roles y permisos
+    $this->call(RolesAndPermissionsSeeder::class);
 
-        // Seeder para el primer usuario (Carlos)
-        $this->call(FirstUserSeeder::class);
+    // Seeder para el primer usuario (Carlos)
+    $this->call(FirstUserSeeder::class);
+
+    // Seeder para normativa (grupos, categorias y documentos)
+    $this->call(NormativaSeeder::class);
     }
 }

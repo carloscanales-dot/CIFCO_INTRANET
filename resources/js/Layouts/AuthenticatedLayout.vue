@@ -40,6 +40,12 @@
           <v-list-item-title>Directorio</v-list-item-title>
         </v-list-item>
         <v-list-item link
+            @click="() => goTo(route('documentos'))"
+            :active="route().current('documentos')"
+            prepend-icon="mdi-file-document">
+          <v-list-item-title>Documentos</v-list-item-title>
+        </v-list-item>
+        <v-list-item link
             @click="() => goTo(route('profile.edit'))"
             :active="route().current('profile.edit')"
             prepend-icon="mdi-account">
