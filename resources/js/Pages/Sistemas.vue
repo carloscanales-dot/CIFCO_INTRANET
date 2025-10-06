@@ -1,56 +1,12 @@
-<script setup>
-import {Head} from '@inertiajs/vue3';
-import {
-  VApp,
-  VAppBar,
-  VContainer,
-  VRow,
-  VCol,
-  VCard,
-  VBtn,
-  VSpacer
-} from 'vuetify/components';
+<script setup lang="ts">
+import { Head, usePage } from '@inertiajs/vue3';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
-defineProps({
-  canLogin: {
-    type: Boolean,
-  },
-  canRegister: {
-    type: Boolean,
-  },
-  laravelVersion: {
-    type: String,
-    required: true,
-  },
-  phpVersion: {
-    type: String,
-    required: true,
-  },
-});
 </script>
 
 <template>
-  <Head title="INTRANET"/>
-  <v-app
-    style="background: #fff; min-height: 100vh;">
-  <v-app-bar title="CIFCO INTRANET" app color="primary" dark>
-      <v-spacer/>
-      <v-btn v-if="canLogin" href="/login" color="secondary" prepend-icon="mdi-login" variant="text">Login</v-btn>
-      <v-btn v-if="canRegister" href="/register" color="secondary" prepend-icon="mdi-account" variant="text">Register</v-btn>
-    </v-app-bar>
-    <v-main>
-        <v-container>
-          <v-row align="center" justify="center">
-            <v-col cols="12" md="6" class="d-flex align-center justify-center">
-              <h1 style="color: #1976d2; font-weight: bold; font-size: 2.5rem; text-align: left;">
-                Portal de Servicios Institucionales de CIFCO
-              </h1>
-            </v-col>
-            <v-col cols="12" md="6" class="d-flex align-center justify-center">
-              <img src="/img/intro-img.svg" alt="Intro" style="max-width: 100%; height: auto;" />
-            </v-col>
-          </v-row>
-        </v-container>
+    <Head title="Sistemas"/>
+   <AuthenticatedLayout>
         <v-container class="py-8" fluid>
           <v-row justify="center" class="mb-6">
             <v-col cols="12">
@@ -64,7 +20,7 @@ defineProps({
               <v-card class="pa-4 text-center" elevation="4">
                 <v-icon size="48" color="primary">mdi-lifebuoy</v-icon>
                 <h3 class="mt-3 mb-1" style="color: #1976d2; font-weight: bold;">Soporte técnico</h3>
-                <p>Para agilizar las solicitudes de soporte y brindarle un mejor servicio, utilizamos un sistema de ticket de soporte técnico. A cada solicitud de asistencia se le asigna un número de ticket único que puede usar para rastrear el progreso y las respuestas en línea.</p>
+                <p>Para agilizar las solicitudes de soporte y brindarle un mejor servicio, utilizamos un sistema de ticket de soporte técnico.</p>
               </v-card>
             </v-col>
             <v-col cols="12" sm="6" md="4">
@@ -106,6 +62,5 @@ defineProps({
             </v-col>
           </v-row>
         </v-container>
-    </v-main>
-  </v-app>
+   </AuthenticatedLayout>
 </template>

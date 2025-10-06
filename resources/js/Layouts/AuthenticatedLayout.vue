@@ -46,6 +46,12 @@
           <v-list-item-title>Documentos</v-list-item-title>
         </v-list-item>
         <v-list-item link
+            @click="() => goTo(route('sistemas'))"
+            :active="route().current('sistemas')"
+            prepend-icon="mdi-cog">
+          <v-list-item-title>Sistemas</v-list-item-title>
+        </v-list-item>
+        <v-list-item link
             @click="() => goTo(route('profile.edit'))"
             :active="route().current('profile.edit')"
             prepend-icon="mdi-account">
