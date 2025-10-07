@@ -32,4 +32,10 @@ Route::middleware('auth')->group(function () {
     })->name('sistemas');
 });
 
+Route::middleware('auth')->group(function () {
+    Route::get('/formatos', function () {
+        return Inertia::render('Formatos');
+    })->name('formatos');
+});
+
 require __DIR__.'/auth.php';

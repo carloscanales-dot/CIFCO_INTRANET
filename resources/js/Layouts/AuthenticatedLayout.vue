@@ -52,6 +52,13 @@
           <v-list-item-title>Sistemas</v-list-item-title>
         </v-list-item>
         <v-list-item link
+            @click="() => goTo(route('formatos'))"
+            :active="route().current('formatos')"
+            prepend-icon="mdi-file-chart">
+          <v-list-item-title>Formatos</v-list-item-title>
+        </v-list-item>
+        <v-divider/>
+        <v-list-item link
             @click="() => goTo(route('profile.edit'))"
             :active="route().current('profile.edit')"
             prepend-icon="mdi-account">
