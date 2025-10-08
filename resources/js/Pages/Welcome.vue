@@ -68,7 +68,7 @@ defineProps({
               </v-card>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <v-card class="pa-4 text-center" elevation="4" href="https://transporte.cifco.gob.sv/users/login" target="_blank" hover>
+              <v-card class="pa-4 text-center" elevation="4" hover clickable href="https://transporte.cifco.gob.sv/users/login" target="_blank">
                 <v-icon size="48" color="primary">mdi-truck</v-icon>
                 <h3 class="mt-3 mb-1" style="color: #1976d2; font-weight: bold;">Gestión de Transporte</h3>
                 <p>Sistema para la gestión de flotas de vehículos, programación de rutas y seguimiento de envíos.</p>
@@ -91,7 +91,7 @@ defineProps({
                 </v-card>
             </v-col>
             <v-col cols="12" sm="6" md="4">
-              <v-card class="pa-4 text-center" elevation="4" hover clickable href="https://marcacion.cifco.gob.sv" target="_blank">
+              <v-card class="pa-4 text-center" elevation="4" hover clickable href="https://marcaciones.cifco.gob.sv" target="_blank">
                 <v-icon size="48" color="primary">mdi-account-clock</v-icon>
                 <h3 class="mt-3 mb-1" style="color: #1976d2; font-weight: bold;">Sistema de marcación</h3>
                 <p>Sistema de control de asistencias y permisos.</p>

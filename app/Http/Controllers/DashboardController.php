@@ -8,7 +8,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $usuarios = User::select('id', 'name', 'fecha_nacimiento')->get();
+        $usuarios = User::select('id', 'name', 'fecha_nacimiento', 'sexo')->get();
 
         return Inertia::render('Dashboard', [
             'usuarios' => $usuarios

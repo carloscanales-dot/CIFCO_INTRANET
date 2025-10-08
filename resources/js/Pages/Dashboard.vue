@@ -25,7 +25,7 @@ const calendar = ref(null)
 const usuarios = computed(() => page.props.usuarios ?? [])
 
 // Log para depurar
-console.log('🟢 Usuarios desde Inertia:', usuarios.value)
+console.log('🟢 Usuarios desde Inertia:', usuarios)
 
 // --- Generar eventos de cumpleaños ---
 function getCumpleEventos() {
@@ -36,7 +36,7 @@ function getCumpleEventos() {
     const fecha = new Date(u.fecha_nacimiento)
     const cumpleEsteAnio = new Date(year, fecha.getMonth(), fecha.getDate(), 0, 0, 0)
 
-    const color = u.sexo === 'M' ? 'pink' : 'blue'
+    const color = u.sexo === 'M' ? 'blue' : 'pink'
 
     const evento = {
       name: `🎂 ${u.name}`,
