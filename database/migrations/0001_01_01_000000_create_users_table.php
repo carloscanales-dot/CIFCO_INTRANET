@@ -35,6 +35,8 @@ return new class extends Migration
             $table->string('telefono')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->boolean('empleado_estado')->default(true);
+            $table->string('url_foto')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

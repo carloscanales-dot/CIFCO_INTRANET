@@ -32,7 +32,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $empleado->syncPermissions($allPerms);
 
         // Asignar rol Administrador al primer usuario creado (si existe)
-        $user = User::where('email', 'test@example.com')->first();
+        $user = User::where('email', 'carlos.canales@cifco.gob.sv')->first();
         if ($user) {
             $user->assignRole($admin);
         }

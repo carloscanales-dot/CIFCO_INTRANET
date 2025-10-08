@@ -14,15 +14,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+    // User::factory(10)->create();
 
     // Seeder para roles y permisos
     $this->call(RolesAndPermissionsSeeder::class);
+    
+    // Seeder para inserción de cargos
+    $this->call(AreaSeeder::class);
+
+    // Seeder para inserción de cargos
+    $this->call(CargosSeeder::class);
 
     // Seeder para el primer usuario (Carlos)
     $this->call(FirstUserSeeder::class);
 
     // Seeder para normativa (grupos, categorias y documentos)
     $this->call(NormativaSeeder::class);
+
+    // Seeder para todos los usuarios
+    
+    $this->call(AllUsersSeeder::class);
+    
     }
 }
