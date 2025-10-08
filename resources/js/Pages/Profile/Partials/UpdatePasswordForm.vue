@@ -1,14 +1,14 @@
 <template>
   <v-sheet elevation="0" max-width="500">
-    <div class="text-h6 mb-1">Update Password</div>
+    <div class="text-h6 mb-1">Actualiza tu contraseña</div>
     <div class="mb-4 text-body-2">
-      Ensure your account is using a long, random password to stay secure.
+      Asegúrate de que tu cuenta esté utilizando una contraseña larga y aleatoria para mantenerla segura.
     </div>
     <v-form @submit.prevent="updatePassword">
       <v-text-field
           v-model="form.current_password"
           :type="showCurrent ? 'text' : 'password'"
-          label="Current Password"
+          label="Contraseña Actual"
           :append-icon="showCurrent ? 'mdi-eye-off' : 'mdi-eye'"
           @click:append="showCurrent = !showCurrent"
           :error-messages="form.errors.current_password"
@@ -19,7 +19,7 @@
       <v-text-field
           v-model="form.password"
           :type="showNew ? 'text' : 'password'"
-          label="New Password"
+          label="Nueva Contraseña"
           :append-icon="showNew ? 'mdi-eye-off' : 'mdi-eye'"
           @click:append="showNew = !showNew"
           :error-messages="form.errors.password"
@@ -30,7 +30,7 @@
       <v-text-field
           v-model="form.password_confirmation"
           :type="showConfirm ? 'text' : 'password'"
-          label="Confirm Password"
+          label="Confirmar Contraseña"
           :append-icon="showConfirm ? 'mdi-eye-off' : 'mdi-eye'"
           @click:append="showConfirm = !showConfirm"
           :error-messages="form.errors.password_confirmation"
@@ -44,10 +44,10 @@
           color="primary"
           type="submit"
       >
-        Save
+        Guardar
       </v-btn>
       <span v-if="form.recentlySuccessful" class="text-body-2 text-grey-darken-1 ms-4">
-          Saved.
+          Guardado.
         </span>
     </v-form>
     <v-divider thickness="2" class="mt-12"/>

@@ -23,13 +23,13 @@ defineProps({
       <h2
           class="text-xl font-semibold leading-tight text-gray-800"
       >
-        Profile
+        Usuario
       </h2>
     </template>
 
     <div class="my-12">
       <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-        <div class="py-8">
+        <div class="py-2">
           <UpdateProfileInformationForm
               :must-verify-email="mustVerifyEmail"
               :status="status"
@@ -38,11 +38,8 @@ defineProps({
 
         </div>
 
-        <div class="py-8">
+        <div class="py-2">
           <UpdatePasswordForm class="max-w-xl"/>
-        </div>
-        <div class="py-8">
-          <DeleteUserForm class="max-w-xl"/>
         </div>
       </div>
     </div>

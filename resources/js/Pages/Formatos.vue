@@ -30,7 +30,7 @@
             <v-col cols="12" sm="6" md="4">
               <v-card class="pa-4 text-center" elevation="4" hover clickable href="/storage/formats/Formato_Solicitud_de_Permiso.pdf" target="_blank">
                 <v-icon size="48" color="primary">mdi-file-document</v-icon>
-                <h3 class="mt-3 mb-1" style="color: #1976d2; font-weight: bold;">Formato de Solicitud de salida de equipo</h3>
+                <h3 class="mt-3 mb-1" style="color: #1976d2; font-weight: bold;">Formato de salida de equipo</h3>
                 <p>Formato utilizado para solicitar la salida de equipo de la organización.</p>
                 <VBtn color="primary" href="/docs/FORMATOS/FORMATO CONTROL DE SALIDA DE MOBILIARIO Y EQUIPO AF Y AD.xlsx" target="_blank">Descargar</VBtn>
               </v-card>
