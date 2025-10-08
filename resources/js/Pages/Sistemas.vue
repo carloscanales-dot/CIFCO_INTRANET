@@ -40,7 +40,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
           </v-row>
           <v-row justify="center" align="stretch">
             <v-col cols="12" sm="6" md="4">
-              <v-card class="pa-4 text-center" elevation="4" hover clickable href="https://rrhh.cifco.gob.sv" target="_blank">
+              <v-card class="pa-4 text-center" elevation="4" hover clickable href="https://rh.cifco.gob.sv" target="_blank">
                 <v-icon size="48" color="primary">mdi-account-group</v-icon>
                 <h3 class="mt-3 mb-1" style="color: #1976d2; font-weight: bold;">Sistema de Recursos humanos</h3>
                 <p>Sistema para la gestión de empleados y nómina.</p>

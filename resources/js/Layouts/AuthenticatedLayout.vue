@@ -30,7 +30,7 @@
             @click="() => goTo(route('dashboard'))"
             :active="route().current('dashboard')"
             prepend-icon="mdi-view-dashboard">
-          <v-list-item-title>Dashboard</v-list-item-title>
+          <v-list-item-title>Cumpleaños</v-list-item-title>
         </v-list-item>
         <v-divider/>
         <v-list-item link
@@ -62,7 +62,7 @@
             @click="() => goTo(route('profile.edit'))"
             :active="route().current('profile.edit')"
             prepend-icon="mdi-account">
-          <v-list-item-title>Profile</v-list-item-title>
+          <v-list-item-title>Usuario</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>

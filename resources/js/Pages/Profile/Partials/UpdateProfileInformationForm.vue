@@ -1,16 +1,17 @@
 <template>
   <v-sheet elevation="0"  max-width="500">
-    <div class="text-h6 mb-1">Profile Information</div>
+    <div class="text-h6 mb-1">Informacion de usuario</div>
     <div class="mb-4 text-body-2">
-      Update your account's profile information and email address.
+      Actualiza la información de tu cuenta y dirección de correo electrónico.
     </div>
     <v-form @submit.prevent="form.patch(route('profile.update'))">
       <v-text-field
           v-model="form.name"
-          label="Name"
+          label="Nombre"
           :error-messages="form.errors.name"
           required
           autofocus
+          readonly=""
           autocomplete="name"
           class="mb-4"
       />
@@ -18,6 +19,7 @@
           v-model="form.email"
           label="Email"
           type="email"
+          readonly
           :error-messages="form.errors.email"
           required
           autocomplete="username"
@@ -41,14 +43,7 @@
           A new verification link has been sent to your email address.
         </div>
       </div>
-      <v-btn
-          :loading="form.processing"
-          :disabled="form.processing"
-          color="primary"
-          type="submit"
-      >
-        Save
-      </v-btn>
+
       <span v-if="form.recentlySuccessful" class="text-body-2 text-grey-darken-1 ms-4">
           Saved.
         </span>
