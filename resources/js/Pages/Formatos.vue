@@ -1,10 +1,10 @@
 <template>
     <Head title="Formatos"/>
-   <AuthenticatedLayout>
+   <AuthenticatedLayout id="dashboard-page">
         <v-container class="py-8" fluid>
           <v-row justify="center" class="mb-6">
             <v-col cols="12">
-              <h2 style="text-align: center; color: #1976d2; font-weight: bold; font-size: 2rem;">
+              <h2 style="text-align: center; color: white; font-weight: bold; font-size: 2rem;">
                 Formatos institucionales de CIFCO
               </h2>
             </v-col>
@@ -15,7 +15,7 @@
               <v-card class="pa-4 text-center" elevation="4" hover clickable href="/storage/formats/Formato_Solicitud_de_Compra.pdf" target="_blank">
                 <v-icon size="48" color="primary">mdi-file-document</v-icon>
                 <h3 class="mt-3 mb-1" style="color: #1976d2; font-weight: bold;">Formulario mision oficial</h3>
-                <p>Formato utilizado para solicitar permisos de misión oficial y salida por trabajo.</p>
+                <p>Formato utilizado para solicitar una misión oficial y salida por trabajo.</p>
                 <VBtn color="primary" href="/docs/FORMATOS/Formulario mision oficial.pdf" target="_blank">Descargar</VBtn>
               </v-card>
             </v-col>
@@ -46,3 +46,9 @@
         import { VBtn } from 'vuetify/components';
         const page = usePage()
    </script>
+<style>
+#dashboard-page .v-main {
+    position: relative;
+    background-color: #3c4557;
+}
+</style>

@@ -5,6 +5,15 @@ import { ref, computed, watch } from 'vue'
 
 const page = usePage()
 
+// --- Dialogo ---
+const dialog = ref(false)
+const selectedEvent = ref(null)
+
+function handleEventClick({ event }) {
+    selectedEvent.value = event
+    dialog.value = true
+}
+
 // --- Configuración del calendario ---
 const type = ref('month')
 const types = [
@@ -175,9 +184,25 @@ watch(usuarios, (nuevos) => {
           :event-overlap-threshold="30"
           :weekdays="weekday"
           @change="onCalendarChange"
+          @click:event="handleEventClick"
           theme="dark"
         />
       </v-sheet>
+
+        <!-- Dialogo de cumpleaños -->
+        <v-dialog v-model="dialog" width="auto">
+            <v-card>
+                <v-card-title>
+                    Detalles del Cumpleañero
+                </v-card-title>
+                <v-card-text v-if="selectedEvent">
+                    ¡Feliz cumpleaños para <strong>{{ selectedEvent.name.replace('🎂', '').trim() }}</strong>!
+                </v-card-text>
+                <v-card-actions>
+                    <v-btn color="primary" block @click="dialog = false">Cerrar</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </v-container>
   </AuthenticatedLayout>
 </template>
