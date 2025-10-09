@@ -1,13 +1,14 @@
 <template>
-  <AuthenticatedLayout>
+    <Head title="Documentos" />
+  <AuthenticatedLayout id="dashboard-page">
     <template #header>
-      <h2 class="text-xl font-semibold leading-tight">Documentos</h2>
+      <h2 class="text-xl font-semibold leading-tight text-white">Documentos</h2>
     </template>
 
     <div class="py-6">
-      <v-tabs v-model="tabModel" background-color="primary" dark>
-        <v-tab value="interna" :class="tabModel === 'interna' ? 'bg-primary text-white' : ''">Normativa Interna</v-tab>
-        <v-tab value="externa" :class="tabModel === 'externa' ? 'bg-primary text-white' : ''">Normativa Externa</v-tab>
+      <v-tabs v-model="tabModel" background-color="white" dark>
+        <v-tab value="interna" :class="tabModel === 'interna' ? 'bg-white text-primary' : ' text-white'">Normativa Interna</v-tab>
+        <v-tab value="externa" :class="tabModel === 'externa' ? 'bg-white text-primary' : 'text-white'">Normativa Externa</v-tab>
       </v-tabs>
 
       <v-tabs-window v-model="tabModel">
@@ -108,6 +109,7 @@
 </template>
 
 <script setup>
+import { Head } from '@inertiajs/vue3';
 import { ref, computed } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
@@ -166,6 +168,10 @@ const verDocumento = (doc) => {
 };
 </script>
 
-<style scoped>
-.bg-primary { background-color: #1976d2; }
+<style>
+#dashboard-page .v-main {
+    position: relative;
+    background-color: #3c4557;
+}
+
 </style>

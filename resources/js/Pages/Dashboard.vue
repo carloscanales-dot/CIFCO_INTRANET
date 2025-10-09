@@ -7,9 +7,17 @@ const page = usePage()
 
 // --- Configuración del calendario ---
 const type = ref('month')
-const types = ['month', 'week', 'day', '4day']
+const types = [
+  { title: 'Mes', value: 'month' },
+  { title: 'Semana', value: 'week' },
+  { title: 'Día', value: 'day' },
+  { title: '4 Días', value: '4day' },
+]
 const mode = ref('stack')
-const modes = ['stack', 'column']
+const modes = [
+  { title: 'Apilado', value: 'stack' },
+  { title: 'Columna', value: 'column' },
+]
 const weekday = ref([0, 1, 2, 3, 4, 5, 6])
 const weekdays = [
   { title: 'Dom - Sáb', value: [0, 1, 2, 3, 4, 5, 6] },
@@ -20,38 +28,41 @@ const weekdays = [
 const value = ref(new Date().toISOString().slice(0, 10))
 const events = ref([])
 const calendar = ref(null)
+const displayedMonthYear = ref('')
 
 // --- Datos desde Laravel / Inertia ---
 const usuarios = computed(() => page.props.usuarios ?? [])
 
-// Log para depurar
-console.log('🟢 Usuarios desde Inertia:', usuarios)
-
 // --- Generar eventos de cumpleaños ---
 function getCumpleEventos() {
   const year = new Date(value.value).getFullYear()
-  console.log('📅 Generando eventos para el año:', year)
 
-  const evts = usuarios.value.map(u => {
-    const fecha = new Date(u.fecha_nacimiento)
-    const cumpleEsteAnio = new Date(year, fecha.getMonth(), fecha.getDate(), 0, 0, 0)
+  const evts = usuarios.value.flatMap(u => {
+    if (!u.fecha_nacimiento) {
+      return [] // Omitir usuario si no tiene fecha de nacimiento
+    }
+
+    // Se corrige el cálculo de la fecha de cumpleaños para evitar problemas de zona horaria.
+    // new Date('YYYY-MM-DD') es interpretado como UTC. Se parsea manualmente para usar la hora local.
+    const dateParts = u.fecha_nacimiento.split('-')
+    const month = parseInt(dateParts[1], 10) - 1
+    const day = parseInt(dateParts[2], 10)
+    const cumpleEsteAnio = new Date(year, month, day)
 
     const color = u.sexo === 'M' ? 'blue' : 'pink'
 
     const evento = {
-      name: `🎂 ${u.name}`,
+      name: `🎂 ${u.name}`, // FIX: v-calendar usa 'title', no 'name'
       start: cumpleEsteAnio,
       end: cumpleEsteAnio,
       color: color,
       timed: false,
     }
 
-    console.log('🎈 Evento generado:', evento)
-    return evento
+    return [evento]
   })
 
   events.value = evts
-  console.log('✅ Eventos listos para el calendario:', events.value)
 }
 
 
@@ -60,8 +71,12 @@ getCumpleEventos()
 
 // --- Cuando el rango visible cambia ---
 function onCalendarChange({ start, end }) {
-  console.log('📆 Rango visible cambió:', start, end)
   getCumpleEventos()
+  // Actualizar el mes y año mostrado para corregir bug de reactividad
+  const date = new Date(start.date.replace(/-/g, '/')) // Usar / para evitar problemas de zona horaria
+  const month = date.toLocaleString('es-ES', { month: 'long' });
+  const year = start.year;
+  displayedMonthYear.value = `${month.charAt(0).toUpperCase() + month.slice(1)} ${year}`;
 }
 
 // --- Colores de eventos ---
@@ -79,7 +94,6 @@ function prevMonth() {
 
 // 🔄 Si los usuarios cambian dinámicamente
 watch(usuarios, (nuevos) => {
-  console.log('🔄 Usuarios actualizados:', nuevos)
   getCumpleEventos()
 })
 </script>
@@ -87,16 +101,21 @@ watch(usuarios, (nuevos) => {
 <template>
   <Head title="Cumpleaños" />
 
-  <AuthenticatedLayout>
+  <AuthenticatedLayout id="dashboard-page">
     <template #header>
-      <h2 class="text-xl font-semibold leading-tight text-gray-800">
-        Calendario de Cumpleaños 🎉
-      </h2>
+        <div class="flex justify-between items-center">
+            <h2 class="text-xl font-semibold leading-tight text-white">
+                Calendario de Cumpleaños 🎉
+            </h2>
+            <h2 class="text-xl font-semibold leading-tight text-white">
+                {{ displayedMonthYear }}
+            </h2>
+        </div>
     </template>
 
     <v-container>
       <!-- Barra de control -->
-      <v-sheet class="d-flex align-center mb-2" tile>
+      <v-sheet class="d-flex align-center mb-2" rounded="lg">
         <v-btn class="ma-2" variant="text" icon @click="prevMonth">
           <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
@@ -104,6 +123,8 @@ watch(usuarios, (nuevos) => {
         <v-select
           v-model="type"
           :items="types"
+          item-title="title"
+          item-value="value"
           class="ma-2"
           density="comfortable"
           label="Vista"
@@ -114,6 +135,8 @@ watch(usuarios, (nuevos) => {
         <v-select
           v-model="mode"
           :items="modes"
+          item-title="title"
+          item-value="value"
           class="ma-2"
           density="comfortable"
           label="Modo"
@@ -141,7 +164,7 @@ watch(usuarios, (nuevos) => {
       </v-sheet>
 
       <!-- Calendario principal -->
-      <v-sheet height="600">
+      <v-sheet height="600" rounded="lg">
         <v-calendar
           ref="calendar"
           v-model="value"
@@ -152,8 +175,16 @@ watch(usuarios, (nuevos) => {
           :event-overlap-threshold="30"
           :weekdays="weekday"
           @change="onCalendarChange"
+          theme="dark"
         />
       </v-sheet>
     </v-container>
   </AuthenticatedLayout>
 </template>
+<style>
+#dashboard-page .v-main {
+    position: relative;
+    background-color: #3c4557;
+}
+
+</style>

@@ -32,17 +32,17 @@ const headers = [
 <template>
     <Head title="Directorio" />
 
-    <AuthenticatedLayout>
+    <AuthenticatedLayout id="dashboard-page2">
         <template #header>
-            <h2 class="text-xl font-semibold leading-tight text-gray-800">Directorio</h2>
+            <h2 class="text-xl font-semibold leading-tight text-white">Directorio</h2>
         </template>
 
         <v-container>
             <v-row class="mb-4">
-                <v-text-field v-model="search" label="Buscar" prepend-inner-icon="mdi-magnify"/>
+                <v-text-field v-model="search" label="Buscar" prepend-inner-icon="mdi-magnify" variant="solo" rounded="lg" hide-details />
             </v-row>
 
-            <v-sheet>
+            <v-sheet class="pa-4" rounded="lg">
                 <v-data-table :items="filtered" :headers="headers">
                     <template #item.name="{ item }">
                         <div class="font-medium">{{ item.name }}</div>
@@ -64,3 +64,10 @@ const headers = [
         </v-container>
     </AuthenticatedLayout>
 </template>
+<style>
+#dashboard-page2 .v-main {
+    position: relative;
+    background-color: #3c4557;
+}
+
+</style>
