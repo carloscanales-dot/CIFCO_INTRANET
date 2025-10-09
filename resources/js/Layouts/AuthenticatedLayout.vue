@@ -24,7 +24,7 @@
       </v-container>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" app>
+    <v-navigation-drawer v-model="drawer" expand-on-hover app>
       <v-list>
         <v-list-item link
             @click="() => goTo(route('dashboard'))"
@@ -58,6 +58,12 @@
           <v-list-item-title>Formatos</v-list-item-title>
         </v-list-item>
         <v-divider/>
+        <v-list-item v-if="$page.props.auth.roles.includes('Administrador')" link
+            @click="() => goTo(route('administrar'))"
+            :active="route().current('administrar')"
+            prepend-icon="mdi-shield-account">
+          <v-list-item-title>Administrar</v-list-item-title>
+        </v-list-item>
         <v-list-item link
             @click="() => goTo(route('profile.edit'))"
             :active="route().current('profile.edit')"

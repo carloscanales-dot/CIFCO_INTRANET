@@ -31,6 +31,10 @@ class RolesAndPermissionsSeeder extends Seeder
         $admin->syncPermissions($allPerms);
         $empleado->syncPermissions($allPerms);
 
+        // Permiso para la nueva vista
+        $permiso_administrar = Permission::firstOrCreate(['name' => 'access administration', 'guard_name' => 'web']);
+        $admin->givePermissionTo($permiso_administrar);
+
         // Asignar rol Administrador al primer usuario creado (si existe)
         $user = User::where('email', 'carlos.canales@cifco.gob.sv')->first();
         if ($user) {
