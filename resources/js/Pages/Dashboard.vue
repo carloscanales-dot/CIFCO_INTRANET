@@ -2,6 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, usePage } from '@inertiajs/vue3'
 import { ref, computed, watch } from 'vue'
+import UpdateProfilePic from './Profile/Partials/UpdateProfilePic.vue';
 
 const page = usePage()
 
@@ -10,9 +11,11 @@ const dialog = ref(false)
 const selectedEvent = ref(null)
 
 function handleEventClick({ event }) {
-    selectedEvent.value = event
-    dialog.value = true
+  console.log('Evento seleccionado:', event)
+  selectedEvent.value = event
+  dialog.value = true
 }
+
 
 // --- Configuración del calendario ---
 const type = ref('month')
@@ -43,6 +46,7 @@ const displayedMonthYear = ref('')
 const usuarios = computed(() => page.props.usuarios ?? [])
 
 // --- Generar eventos de cumpleaños ---
+// --- Generar eventos de cumpleaños ---
 function getCumpleEventos() {
   const year = new Date(value.value).getFullYear()
 
@@ -51,8 +55,6 @@ function getCumpleEventos() {
       return [] // Omitir usuario si no tiene fecha de nacimiento
     }
 
-    // Se corrige el cálculo de la fecha de cumpleaños para evitar problemas de zona horaria.
-    // new Date('YYYY-MM-DD') es interpretado como UTC. Se parsea manualmente para usar la hora local.
     const dateParts = u.fecha_nacimiento.split('-')
     const month = parseInt(dateParts[1], 10) - 1
     const day = parseInt(dateParts[2], 10)
@@ -61,11 +63,12 @@ function getCumpleEventos() {
     const color = u.sexo === 'M' ? 'blue' : 'pink'
 
     const evento = {
-      name: `🎂 ${u.name}`, // FIX: v-calendar usa 'title', no 'name'
+      name: `🎂 ${u.name}`,   // usar title, no name
       start: cumpleEsteAnio,
       end: cumpleEsteAnio,
-      color: color,
+      color,
       timed: false,
+      usuario: u  // 👉 aquí pasamos TODO el usuario
     }
 
     return [evento]
@@ -73,7 +76,6 @@ function getCumpleEventos() {
 
   events.value = evts
 }
-
 
 // Llamar al inicio
 getCumpleEventos()
@@ -108,18 +110,19 @@ watch(usuarios, (nuevos) => {
 </script>
 
 <template>
+
   <Head title="Cumpleaños" />
 
   <AuthenticatedLayout id="dashboard-page">
     <template #header>
-        <div class="flex justify-between items-center">
-            <h2 class="text-xl font-semibold leading-tight text-white">
-                Calendario de Cumpleaños 🎉
-            </h2>
-            <h2 class="text-xl font-semibold leading-tight text-white">
-                {{ displayedMonthYear }}
-            </h2>
-        </div>
+      <div class="flex justify-between items-center">
+        <h2 class="text-xl font-semibold leading-tight text-white">
+          Calendario de Cumpleaños 🎉
+        </h2>
+        <h2 class="text-xl font-semibold leading-tight text-white">
+          {{ displayedMonthYear }}
+        </h2>
+      </div>
     </template>
 
     <v-container>
@@ -129,41 +132,14 @@ watch(usuarios, (nuevos) => {
           <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
 
-        <v-select
-          v-model="type"
-          :items="types"
-          item-title="title"
-          item-value="value"
-          class="ma-2"
-          density="comfortable"
-          label="Vista"
-          variant="outlined"
-          hide-details
-        />
+        <v-select v-model="type" :items="types" item-title="title" item-value="value" class="ma-2" density="comfortable"
+          label="Vista" variant="outlined" hide-details />
 
-        <v-select
-          v-model="mode"
-          :items="modes"
-          item-title="title"
-          item-value="value"
-          class="ma-2"
-          density="comfortable"
-          label="Modo"
-          variant="outlined"
-          hide-details
-        />
+        <v-select v-model="mode" :items="modes" item-title="title" item-value="value" class="ma-2" density="comfortable"
+          label="Modo" variant="outlined" hide-details />
 
-        <v-select
-          v-model="weekday"
-          :items="weekdays"
-          class="ma-2"
-          density="comfortable"
-          label="Días"
-          variant="outlined"
-          hide-details
-          item-title="title"
-          item-value="value"
-        />
+        <v-select v-model="weekday" :items="weekdays" class="ma-2" density="comfortable" label="Días" variant="outlined"
+          hide-details item-title="title" item-value="value" />
 
         <v-spacer></v-spacer>
 
@@ -174,42 +150,64 @@ watch(usuarios, (nuevos) => {
 
       <!-- Calendario principal -->
       <v-sheet height="600" rounded="lg">
-        <v-calendar
-          ref="calendar"
-          v-model="value"
-          :type="type"
-          :events="events"
-          :event-color="getEventColor"
-          :event-overlap-mode="mode"
-          :event-overlap-threshold="30"
-          :weekdays="weekday"
-          @change="onCalendarChange"
-          @click:event="handleEventClick"
-          theme="dark"
-        />
+        <v-calendar ref="calendar" v-model="value" :type="type" :events="events" :event-color="getEventColor"
+          :event-overlap-mode="mode" :event-overlap-threshold="30" :weekdays="weekday" @change="onCalendarChange"
+          @click:event="handleEventClick" theme="dark" />
       </v-sheet>
 
-        <!-- Dialogo de cumpleaños -->
-        <v-dialog v-model="dialog" width="auto">
-            <v-card>
-                <v-card-title>
-                    Detalles del Cumpleañero
-                </v-card-title>
-                <v-card-text v-if="selectedEvent">
-                    ¡Feliz cumpleaños para <strong>{{ selectedEvent.name.replace('🎂', '').trim() }}</strong>!
-                </v-card-text>
-                <v-card-actions>
-                    <v-btn color="primary" block @click="dialog = false">Cerrar</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
+      <!-- Dialogo de cumpleaños -->
+      <v-dialog v-model="dialog" max-width="500">
+        <template v-slot:default="{ isActive }">
+          <v-card rounded="lg">
+            <v-card-title class="d-flex justify-center align-center">
+              <div class="text-h5 text-medium-emphasis ps-2">
+                ¡FELIZ CUMPLEAÑOS! 🎂
+              </div>
+            </v-card-title>
+
+            <v-divider class="mb-4"></v-divider>
+
+            <v-row justify="center" align="center" class="mb-8">
+              <v-col cols="12" sm="6" md="4" class="d-flex justify-center">
+                <v-avatar size="160" class="elevation-4 d-flex justify-center align-center">
+                  <UpdateProfilePic />
+                </v-avatar>
+              </v-col>
+            </v-row>
+            <v-row justify="center" align="center" class="mb-4">
+              <v-col cols="12" class="text-center">
+                <div class="text-h6 font-weight-bold">
+                  Cumpleañero: {{ selectedEvent?.usuario?.name ?? "Nombre no encontrado"}}
+                </div>
+                <div class="text-subtitle-1 text-grey-darken-1">
+                  Cargo: {{ selectedEvent?.usuario?.cargo ?? "Cargo no encontrado"
+                  }}
+                </div>
+                <div class="text-body-2 text-grey-darken-2">
+                 Area: {{ selectedEvent?.usuario?.area ?? "Área no encontrada"
+                  }}
+                </div>
+                <div class="text-body-2 text-grey-darken-2">
+                  {{ selectedEvent?.usuario?.area }}
+                </div>
+              </v-col>
+            </v-row>
+
+            <v-divider class="mt-2"></v-divider>
+
+            <v-card-actions class="my-2 d-flex justify-center">
+              <v-btn class="text-none w-100" color="primary" rounded="xm" text="Aceptar" variant="flat"  
+                @click="isActive.value = false"></v-btn>
+            </v-card-actions>
+          </v-card>
+        </template>
+      </v-dialog>
     </v-container>
   </AuthenticatedLayout>
 </template>
 <style>
 #dashboard-page .v-main {
-    position: relative;
-    background-color: #3c4557;
+  position: relative;
+  background-color: #3c4557;
 }
-
 </style>
