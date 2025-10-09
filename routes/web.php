@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AsignacionEquipoController;
+use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Foundation\Application;
@@ -27,6 +29,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/administrar', [App\Http\Controllers\AdministrarController::class, 'index'])->middleware(['verified', 'role:Administrador'])->name('administrar');
+});
+
+Route::middleware(['auth', 'verified', 'role:Administrador'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/user-management', [\App\Http\Controllers\Admin\UserManagementController::class, 'index'])->name('user.management');
+    Route::get('/asignacion-equipo', [\App\Http\Controllers\Admin\AsignacionEquipoController::class, 'index'])->name('asignacion.equipo');
 });
 
 Route::middleware('auth')->group(function () {
