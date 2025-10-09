@@ -13,18 +13,8 @@
       ></v-img>
       <!-- Overlay con ícono "+" -->
       <div class="overlay">
-        <v-icon size="40" color="white">mdi-plus</v-icon>
       </div>
     </v-avatar>
-
-    <!-- Input oculto para subir imagen -->
-    <input
-      ref="fileInput"
-      type="file"
-      accept="image/*"
-      class="d-none"
-      @change="onFileChange"
-    />
   </div>
 </template>
 
