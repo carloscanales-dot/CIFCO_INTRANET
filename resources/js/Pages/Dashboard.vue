@@ -10,12 +10,11 @@ const page = usePage()
 const dialog = ref(false)
 const selectedEvent = ref(null)
 
-function handleEventClick({ event }) {
-  console.log('Evento seleccionado:', event)
-  selectedEvent.value = event
+function handleEventClick({ e }) {
+  console.log('Evento seleccionado:', e)
+  selectedEvent.value = e.event ?? e  // depende de cómo lo mande Vuetify
   dialog.value = true
 }
-
 
 // --- Configuración del calendario ---
 const type = ref('month')
@@ -75,8 +74,10 @@ function getCumpleEventos() {
   })
 
   events.value = evts
+  return evts; 
 }
 
+const misEventos = getCumpleEventos();
 // Llamar al inicio
 getCumpleEventos()
 
@@ -177,18 +178,18 @@ watch(usuarios, (nuevos) => {
             <v-row justify="center" align="center" class="mb-4">
               <v-col cols="12" class="text-center">
                 <div class="text-h6 font-weight-bold">
-                  Cumpleañero: {{ selectedEvent?.usuario?.name ?? "Nombre no encontrado"}}
+                  Cumpleañero: {{ selectedEvent?.value.usuario?.name ?? "Nombre no encontrado"}}
                 </div>
                 <div class="text-subtitle-1 text-grey-darken-1">
-                  Cargo: {{ selectedEvent?.usuario?.cargo ?? "Cargo no encontrado"
+                  Cargo: {{ selectedEvent?.value.usuario?.cargo ?? "Cargo no encontrado"
                   }}
                 </div>
                 <div class="text-body-2 text-grey-darken-2">
-                 Area: {{ selectedEvent?.usuario?.area ?? "Área no encontrada"
+                 Area: {{ selectedEvent?.value.usuario?.area ?? "Área no encontrada"
                   }}
                 </div>
                 <div class="text-body-2 text-grey-darken-2">
-                  {{ selectedEvent?.usuario?.area }}
+                  {{ selectedEvent?.value.usuario?.area }}
                 </div>
               </v-col>
             </v-row>
