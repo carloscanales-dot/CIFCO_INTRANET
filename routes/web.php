@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -49,10 +50,11 @@ Route::middleware('auth')->group(function () {
 });
 
 
-    Route::get('/construccion', function () {
-        return Inertia::render('Construccion');
-    })->name('construccion');
+Route::get('/construccion', function () {
+    return Inertia::render('Construccion');
+})->name('construccion');
 
+Route::put('/users/{user}', [UserManagementController::class, 'update'])->name('users.update');
+Route::post('/users/{user}/reset-password', [UserManagementController::class, 'resetPassword'])->name('users.reset-password');
 
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

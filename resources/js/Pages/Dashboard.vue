@@ -10,9 +10,9 @@ const page = usePage()
 const dialog = ref(false)
 const selectedEvent = ref(null)
 
-function handleEventClick({ e }) {
-  console.log('Evento seleccionado:', e)
-  selectedEvent.value = e.event ?? e  // depende de cómo lo mande Vuetify
+function handleEventClick({ event }) {
+  console.log('Evento seleccionado:', event)
+  selectedEvent.value = event
   dialog.value = true
 }
 
