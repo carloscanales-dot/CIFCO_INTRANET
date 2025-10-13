@@ -3,7 +3,7 @@
     <v-container class="d-flex justify-center align-center" style="min-height: 100vh;">
       <Head title="Log in" />
       <v-card width="400" class="login-card">
-      <v-card-title class="text-h5">Log in</v-card-title>
+      <v-card-title class="text-h5">Iniciar sesión</v-card-title>
       <v-card-text>
         <form @submit.prevent="submit">
           <v-text-field
@@ -19,7 +19,7 @@
           <v-text-field
               v-model="form.password"
               :type="showPassword ? 'text' : 'password'"
-              label="Password"
+              label="Contraseña"
               :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
               @click:append-inner="showPassword = !showPassword"
               :error-messages="form.errors.password"
@@ -29,7 +29,7 @@
           />
           <v-checkbox
               v-model="form.remember"
-              label="Remember me"
+              label="Recuérdame"
               class="mt-2"
           />
           <div class="d-flex justify-end align-center mt-4">

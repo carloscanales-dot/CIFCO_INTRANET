@@ -33,12 +33,8 @@ function getCumpleEventos() {
     .toISOString()
     .slice(0, 10)
 
+    const fotoUrl = u.url_foto ? `/pictures/${u.url_foto}` : '/pictures/default_avatar.jpg'
 
-    // URL pública del avatar
-    let fotoUrl = '/img/default.png'
-    if (u.url_foto) {
-      fotoUrl = u.url_foto.replace(/\\/g, '/').replace(/^public\//, '/')
-    }
 
     return [{
       name: u.name,
@@ -114,10 +110,7 @@ function updateRange({ start, end }) {
         .toISOString()
         .slice(0, 10)
 
-      let fotoUrl = '/img/default.png'
-      if (u.url_foto) {
-        fotoUrl = u.url_foto.replace(/\\/g, '/').replace(/^public\//, '/')
-      }
+      const fotoUrl = u.url_foto ? `/pictures/${u.url_foto}` : '/pictures/default_avatar.jpg'
 
       eventos.push({
         name: u.name,
@@ -219,7 +212,7 @@ function viewDay({ date }) {
               </v-toolbar>
               <v-card-text class="text-center">
                 <v-avatar size="100" class="mb-2">
-                  <v-img :src="selectedEvent.usuario?.url_foto || '/img/default.png'" />
+                  <v-img :src="selectedEvent.usuario?.url_foto || '/pictures/default_avatar.jpg'" />
                 </v-avatar>
                 <div><strong>{{ selectedEvent.usuario?.name }}</strong></div>
                 <div>{{ selectedEvent.usuario?.cargo?.nombre }}</div>
