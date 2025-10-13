@@ -36,6 +36,7 @@ class FirstUserSeeder extends Seeder
         // Asegurar actualización de campos en caso de que el usuario ya existiera
         $user->update([
             'name' => 'Carlos Enrique Canales Lopez',
+            'password' => bcrypt('12345678'),
             'sexo' => 'M',
             'fecha_nacimiento' => '2003-02-09',
             'telefono' => '7851-0218',

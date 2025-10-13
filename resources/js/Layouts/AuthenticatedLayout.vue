@@ -22,7 +22,7 @@
             </v-btn>
           </template>
           <v-list>
-            <v-list-item prepend-icon="mdi-account" link @click="() => goTo(route('profile.edit'))" title="Profile"/>
+            <v-list-item prepend-icon="mdi-account" link @click="() => goTo(route('profile.edit'))" title="Perfil"/>
             <v-list-item prepend-icon="mdi-logout" title="Logout" link @click="router.post(`/logout`)" color="error"/>
           </v-list>
         </v-menu>
@@ -73,9 +73,20 @@
             @click="() => goTo(route('profile.edit'))"
             :active="route().current('profile.edit')"
             prepend-icon="mdi-account">
-          <v-list-item-title>Usuario</v-list-item-title>
+          <v-list-item-title>Perfil</v-list-item-title>
         </v-list-item>
       </v-list>
+      <template v-slot:append>
+        <div class="pa-2">
+          <v-list-item
+            class="bg-primary rounded"
+            prepend-icon="mdi-logout"
+            title="Cerrar Sesión"
+            @click="router.post(route('logout'))"
+          >
+          </v-list-item>
+        </div>
+      </template>
     </v-navigation-drawer>
 
     <v-main>

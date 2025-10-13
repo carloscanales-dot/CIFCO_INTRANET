@@ -208,7 +208,7 @@ function viewDay({ date }) {
           >
             <v-card color="grey-lighten-4" min-width="350px" flat>
               <v-toolbar :color="selectedEvent.color" dark>
-                <v-toolbar-title>{{ 'FELIZ CUMPLEAÑOS! 🎂' }}</v-toolbar-title>
+                <v-toolbar-title class="text-center">{{ '¡FELIZ CUMPLEAÑOS! 🎂' }}</v-toolbar-title>
               </v-toolbar>
               <v-card-text class="text-center">
                 <v-avatar size="100" class="mb-2">
