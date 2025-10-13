@@ -1,54 +1,93 @@
 <template>
-    <Head title="Formatos"/>
-   <AuthenticatedLayout id="dashboard-page">
-        <v-container class="py-8" fluid>
-          <v-row justify="center" class="mb-6">
-            <v-col cols="12">
-              <h2 style="text-align: center; color: white; font-weight: bold; font-size: 2rem;">
-                Formatos institucionales de CIFCO
-              </h2>
-            </v-col>
-          </v-row>
-          <v-row justify="center" align="stretch" class="mb-4">
-       <!-- cards con iconos en los cuales se puede seleccionar un pdf -->
-            <v-col cols="12" sm="6" md="4">
-              <v-card class="pa-4 text-center" elevation="4" hover clickable href="/storage/formats/Formato_Solicitud_de_Compra.pdf" target="_blank">
-                <v-icon size="48" color="primary">mdi-file-document</v-icon>
-                <h3 class="mt-3 mb-1" style="color: #1976d2; font-weight: bold;">Formulario mision oficial</h3>
-                <p>Formato utilizado para solicitar una misión oficial y salida por trabajo.</p>
-                <VBtn color="primary" href="/docs/FORMATOS/Formulario mision oficial.pdf" target="_blank">Descargar</VBtn>
-              </v-card>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-card class="pa-4 text-center" elevation="4" hover clickable href="/storage/formats/Formato_Solicitud_de_Viaticos.pdf" target="_blank">
-                <v-icon size="48" color="primary">mdi-file-document</v-icon>
-                <h3 class="mt-3 mb-1" style="color: #1976d2; font-weight: bold;">Formato de Permisos</h3>
-                <p>Formato utilizado para solicitar permisos para ausencias o licencias.</p>
-                <VBtn color="primary" href="/docs/FORMATOS/Formulario permisos 2025.pdf" target="_blank">Descargar</VBtn>
-              </v-card>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-card class="pa-4 text-center" elevation="4" hover clickable href="/storage/formats/Formato_Solicitud_de_Permiso.pdf" target="_blank">
-                <v-icon size="48" color="primary">mdi-file-document</v-icon>
-                <h3 class="mt-3 mb-1" style="color: #1976d2; font-weight: bold;">Formato de salida de equipo</h3>
-                <p>Formato utilizado para solicitar la salida de equipo de la organización.</p>
-                <VBtn color="primary" href="/docs/FORMATOS/FORMATO CONTROL DE SALIDA DE MOBILIARIO Y EQUIPO AF Y AD.xlsx" target="_blank">Descargar</VBtn>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-container>
-   </AuthenticatedLayout>
-   </template>
-   <script setup>
-        import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-        import { Head, usePage } from '@inertiajs/vue3';
-        import { ref, computed } from 'vue';
-        import { VBtn } from 'vuetify/components';
-        const page = usePage()
-   </script>
-<style>
+  <Head title="Formatos" />
+  <AuthenticatedLayout id="dashboard-page">
+    <v-container class="py-6 py-sm-10" fluid>
+      <!-- Sección de Introducción -->
+      <v-row justify="center" class="mb-8">
+        <v-col cols="12" md="10" lg="8" class="text-center">
+          <h1 class="text-h4 text-sm-h3 text-white font-weight-bold mb-3">
+            Formatos Institucionales
+          </h1>
+          <p class="text-body-1 text-sm-h6 text-grey-lighten-2 font-weight-regular">
+            Accede y descarga fácilmente todos los documentos y formularios oficiales de CIFCO.
+          </p>
+        </v-col>
+      </v-row>
+
+      <!-- Grid de Formatos -->
+      <v-row justify="center" align="stretch" class="px-md-12">
+        <v-col v-for="formato in formatos" :key="formato.title" cols="12" sm="6" lg="4">
+          <v-card
+            class="fill-height d-flex flex-column card-hover"
+            elevation="6"
+            link
+            :href="formato.href"
+            target="_blank"
+            rounded="xl"
+          >
+            <div class="text-center pt-6">
+              <v-avatar color="primary" size="70">
+                <v-icon size="36" color="white">{{ formato.icon }}</v-icon>
+              </v-avatar>
+            </div>
+            <v-card-title class="text-center font-weight-bold text-wrap">
+              {{ formato.title }}
+            </v-card-title>
+            <v-card-text class="text-center text-medium-emphasis flex-grow-1">
+              {{ formato.description }}
+            </v-card-text>
+            <v-card-actions class="justify-center pa-4">
+              <v-btn variant="elevated" color="primary" :href="formato.href" target="_blank">
+                Descargar
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </AuthenticatedLayout>
+</template>
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Head } from '@inertiajs/vue3';
+
+const formatos = [
+  {
+    title: 'Misión Oficial',
+    description: 'Formato utilizado para solicitar una misión oficial y salida por trabajo.',
+    href: '/docs/FORMATOS/Formulario mision oficial.pdf',
+    icon: 'mdi-file-document-outline',
+  },
+  {
+    title: 'Permisos',
+    description: 'Formato utilizado para solicitar permisos para ausencias o licencias.',
+    href: '/docs/FORMATOS/Formulario permisos 2025.pdf',
+    icon: 'mdi-file-clock-outline',
+  },
+  {
+    title: 'Salida de Equipo',
+    description: 'Formato utilizado para solicitar la salida de equipo de la organización.',
+    href: '/docs/FORMATOS/FORMATO CONTROL DE SALIDA DE MOBILIARIO Y EQUIPO AF Y AD.xlsx',
+    icon: 'mdi-file-export-outline',
+  },
+];
+</script>
+<style scoped>
 #dashboard-page .v-main {
     position: relative;
     background-color: #3c4557;
+}
+
+.card-hover {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
+
+.text-wrap {
+  white-space: normal;
 }
 </style>

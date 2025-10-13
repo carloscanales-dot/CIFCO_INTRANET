@@ -21,7 +21,7 @@
 
                             <!-- Botón a la derecha -->
                             <v-col cols="12" md="6" class="d-flex justify-end">
-                                <v-btn @click="openCreateDialog" prepend-icon="mdi-account-plus">
+                                <v-btn @click="openCreateDialog" prepend-icon="mdi-account-plus" color="primary">
                                     Crear Usuario
                                 </v-btn>
                             </v-col>
