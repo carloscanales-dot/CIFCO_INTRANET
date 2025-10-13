@@ -11,7 +11,12 @@
         <v-spacer/>
         <v-menu>
           <template #activator="{ props }">
-            <v-btn v-bind="props" text>
+            <v-btn v-bind="props" text class="text-none">
+              <v-avatar size="32" class="me-2">
+                <v-img
+                  :src="userAvatar"
+                  alt="Avatar"></v-img>
+              </v-avatar>
               {{ $page.props.auth.user.name }}
               <v-icon end>mdi-menu-down</v-icon>
             </v-btn>
@@ -83,9 +88,10 @@
 </template>
 
 <script setup>
-import {ref} from 'vue';
+import { ref, computed } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import {Link, router} from '@inertiajs/vue3';
+import { Link, router, usePage } from '@inertiajs/vue3';
+
 
 const drawer = ref(false);
 const goTo = (route) => {
@@ -99,4 +105,15 @@ const vGoTo = {
     el.removeEventListener('click', () => goTo(binding.value));
   },
 };
+
+const page = usePage();
+
+const userAvatar = computed(() => {
+  const photoUrl = page.props.auth.user?.url_foto;
+  if (photoUrl) {
+    return `/pictures/${photoUrl}`;
+  }
+  // La imagen por defecto que solicitaste
+  return '/pictures/default_picture.png';
+});
 </script>

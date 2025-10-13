@@ -56,5 +56,6 @@ Route::get('/construccion', function () {
 
 Route::put('/users/{user}', [UserManagementController::class, 'update'])->name('users.update');
 Route::post('/users/{user}/reset-password', [UserManagementController::class, 'resetPassword'])->name('users.reset-password');
+Route::post('/users', [UserManagementController::class, 'store'])->name('users.store');
 
 require __DIR__ . '/auth.php';
