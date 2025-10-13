@@ -22,8 +22,8 @@
             </v-btn>
           </template>
           <v-list>
-            <v-list-item prepend-icon="mdi-account" link @click="() => goTo(route('profile.edit'))" title="Profile"/>
-            <v-list-item prepend-icon="mdi-logout" title="Logout" link @click="router.post(`/logout`)" color="error"/>
+            <v-list-item prepend-icon="mdi-account" link @click="() => goTo(route('profile.edit'))" title="Perfil"/>
+            <v-list-item prepend-icon="mdi-logout" title="Cerrar Sesión" link @click="router.post(`/logout`)" color="error"/>
           </v-list>
         </v-menu>
       </v-container>
