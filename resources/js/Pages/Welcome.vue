@@ -27,6 +27,14 @@ defineProps({
     required: true,
   },
 });
+
+// Íconos con sus enlaces
+const socialLinks = [
+  { icon: 'mdi-facebook', url: 'https://es-la.facebook.com/CIFCOSV/' },
+  { icon: 'mdi-twitter', url: 'https://x.com/cifcosv?lang=es' },
+  { icon: 'mdi-instagram', url: 'https://www.instagram.com/cifcoelsalvador/?hl=es-la' },
+];
+
 </script>
 
 <template>
@@ -36,7 +44,6 @@ defineProps({
   <v-app-bar title="CIFCO INTRANET" app color="primary" dark>
       <v-spacer/>
       <v-btn v-if="canLogin" href="/login" color="secondary" prepend-icon="mdi-login" variant="text">Login</v-btn>
-      <v-btn v-if="canRegister" href="/register" color="secondary" prepend-icon="mdi-account" variant="text">Register</v-btn>
     </v-app-bar>
     <v-main>
         <v-container>
@@ -108,4 +115,29 @@ defineProps({
         </v-container>
     </v-main>
   </v-app>
+   <v-footer class="text-center d-flex flex-column ga-2 py-4" color="#3c4557">
+    <div class="d-flex ga-3">
+      <v-btn
+        v-for="social in socialLinks"
+        :key="social.icon"
+        :icon="social.icon"
+        density="comfortable"
+        variant="text"
+        :href="social.url"
+        target="_blank"
+      ></v-btn>
+    </div>
+
+    <v-divider class="my-2" thickness="2" width="50"></v-divider>
+
+    <div class="text-caption font-weight-regular opacity-60">
+      © Derechos de autor Unidad de Informática - cc. Todos los derechos reservados
+    </div>
+
+    <v-divider></v-divider>
+
+    <div>
+      {{ new Date().getFullYear() }} — <strong>CIFCO</strong>
+    </div>
+  </v-footer>
 </template>
