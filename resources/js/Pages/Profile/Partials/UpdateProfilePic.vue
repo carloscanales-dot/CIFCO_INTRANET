@@ -39,9 +39,9 @@ const props = defineProps({
   },
 })
 
-onMounted(() => {
-  console.log('URL de la foto recibida en UpdateProfilePic.vue:', props.photoUrl);
-});
+// onMounted(() => {
+//   console.log('URL de la foto recibida en UpdateProfilePic.vue:', props.photoUrl);
+// });
 
 const defaultAvatar = '/pictures/default_avatar.jpg'
 

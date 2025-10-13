@@ -13,9 +13,9 @@ const props = defineProps({
   user: Object,
 });
 
-onMounted(() => {
-  console.log('Datos del usuario en Edit.vue:', props.user);
-});
+// onMounted(() => {
+//   console.log('Datos del usuario en Edit.vue:', props.user);
+// });
 </script>
 
 <template>
