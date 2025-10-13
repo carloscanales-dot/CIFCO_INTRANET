@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\User;
+use App\Models\Area;
+use App\Models\Cargo;
 use App\Mail\PasswordResetNotification;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Redirect;
@@ -19,12 +21,15 @@ class UserManagementController extends Controller
     public function index()
     {
         $users = User::with('roles')->get();
-        $roles = Role::all(['id', 'name']); // Trae los roles de Spatie
-
+        $roles = Role::all(['id', 'name']);
+        $areas = Area::all(['id', 'nombre']);
+        $cargos = Cargo::all(['id', 'nombre']);
 
         return Inertia::render('Admin/UserManagement', [
             'users' => $users,
             'roles' => $roles,
+            'areas' => $areas,
+            'cargos' => $cargos,
         ]);
     }
 
@@ -49,6 +54,30 @@ class UserManagementController extends Controller
         // 4. Redirigir de vuelta a la página de administración de usuarios
         // Inertia se encargará de recargar los datos actualizados.
         return Redirect::back()->with('success', 'Usuario actualizado correctamente.');
+    }
+
+    public function store(Request $request)
+    {
+        // 1. Validar los datos del nuevo usuario
+        $validatedData = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8'],
+            'telefono' => ['nullable', 'string', 'max:20'],
+            'area_id' => ['required', 'exists:areas,id'],
+            'cargo_id' => ['required', 'exists:cargos,id'],
+            'sexo' => ['required', 'string', 'in:M,F'],
+            'fecha_nacimiento' => ['nullable', 'date'],
+        ]);
+
+        // 2. Crear el usuario
+        // El modelo User ya se encarga de hashear la contraseña automáticamente
+        // gracias a la propiedad 'casts' que definimos.
+        User::create($validatedData);
+
+        // 3. Redirigir con un mensaje de éxito
+        // El usuario se creará sin roles. Se pueden asignar después editándolo.
+        return Redirect::back()->with('success', 'Usuario creado correctamente.');
     }
 
     public function resetPassword(Request $request, User $user)
