@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, usePage } from '@inertiajs/vue3'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 
 const page = usePage()
 
@@ -29,7 +29,10 @@ function getCumpleEventos() {
     if (!u.fecha_nacimiento) return []
 
     const [y, m, d] = u.fecha_nacimiento.split('-')
-    const date = new Date(year, parseInt(m)-1, parseInt(d))
+    const date = new Date(year, parseInt(m) - 1, parseInt(d))
+    .toISOString()
+    .slice(0, 10)
+
 
     // URL pública del avatar
     let fotoUrl = '/img/default.png'
@@ -49,7 +52,14 @@ function getCumpleEventos() {
   events.value = evts
 }
 
-getCumpleEventos()
+onMounted(() => {
+  // Generar eventos iniciales para el rango visible
+  if (calendar.value?.parsedStart) {
+    updateRange({ start: calendar.value.parsedStart, end: calendar.value.parsedEnd })
+  } else {
+    getCumpleEventos()
+  }
+})
 
 // Toolbar
 function setToday() {
@@ -84,10 +94,47 @@ function getEventColor(event) {
 }
 
 // Actualizar rango visible
-function updateRange({ start }) {
-  focus.value = start.date
-  getCumpleEventos() // actualizar eventos automáticamente al cambiar mes/año
+function updateRange({ start, end }) {
+  // Calcular el año según el rango visible (inicio o fin)
+  const startYear = new Date(start.date).getFullYear()
+  const endYear = new Date(end.date).getFullYear()
+
+  // Si el rango cubre dos años (ej: diciembre 2025 - enero 2026), mostramos ambos
+  const years = startYear === endYear ? [startYear] : [startYear, endYear]
+
+  // Regenerar eventos para esos años
+  const evts = usuarios.value.flatMap(u => {
+    if (!u.fecha_nacimiento) return []
+
+    const [y, m, d] = u.fecha_nacimiento.split('-')
+    let eventos = []
+
+    for (const yr of years) {
+      const fecha = new Date(yr, parseInt(m) - 1, parseInt(d))
+        .toISOString()
+        .slice(0, 10)
+
+      let fotoUrl = '/img/default.png'
+      if (u.url_foto) {
+        fotoUrl = u.url_foto.replace(/\\/g, '/').replace(/^public\//, '/')
+      }
+
+      eventos.push({
+        name: u.name,
+        start: fecha,
+        end: fecha,
+        color: u.sexo === 'M' ? 'blue' : 'pink',
+        usuario: { ...u, url_foto: fotoUrl },
+        details: `Cargo: ${u.cargo ?? '-'}<br>Área: ${u.area ?? '-'}`
+      })
+    }
+
+    return eventos
+  })
+
+  events.value = evts
 }
+
 
 // Click en fecha
 function viewDay({ date }) {
