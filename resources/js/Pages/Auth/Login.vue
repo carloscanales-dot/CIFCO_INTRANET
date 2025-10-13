@@ -14,16 +14,18 @@
               required
               autofocus
               autocomplete="email"
+              variant="solo"
           />
           <v-text-field
               v-model="form.password"
               :type="showPassword ? 'text' : 'password'"
               label="Password"
-              :append-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
-              @click:append="showPassword = !showPassword"
+              :append-inner-icon="showPassword ? 'mdi-eye-off' : 'mdi-eye'"
+              @click:append-inner="showPassword = !showPassword"
               :error-messages="form.errors.password"
               required
               autocomplete="current-password"
+              variant="solo"
           />
           <v-checkbox
               v-model="form.remember"
@@ -31,18 +33,19 @@
               class="mt-2"
           />
           <div class="d-flex justify-end align-center mt-4">
-            <Link
+            <!-- <Link
                 v-if="canResetPassword"
                 :href="route('password.request')"
                 class="me-4 text-decoration-underline"
             >
               Forgot your password?
-            </Link>
+            </Link> -->
             <v-btn
                 :loading="form.processing"
                 :disabled="form.processing"
                 color="primary"
                 type="submit"
+                class="w-100"
             >
               Log in
             </v-btn>

@@ -5,10 +5,16 @@ import UpdatePasswordForm from './Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm.vue';
 import UpdateProfilePic from './Partials/UpdateProfilePic.vue';
 import { Head } from '@inertiajs/vue3';
+import { onMounted } from 'vue';
 
-defineProps({
+const props = defineProps({
   mustVerifyEmail: Boolean,
   status: String,
+  user: Object,
+});
+
+onMounted(() => {
+  console.log('Datos del usuario en Edit.vue:', props.user);
 });
 </script>
 
@@ -23,15 +29,14 @@ defineProps({
           <!-- Card principal -->
           <v-card elevation="4" rounded="xl" class="pa-6">
             <v-card-title class="d-flex justify-center text-h5 font-weight-bold mb-6">
-              Perfil de Usuario   
+              Perfil de Usuario
             </v-card-title>
 
 
-            <!-- Foto de perfil -->
             <v-row justify="center" align="center" class="mb-8">
               <v-col cols="12" sm="6" md="4" class="text-center">
                 <v-avatar size="160" class="elevation-4">
-                  <UpdateProfilePic />
+                  <UpdateProfilePic :photo-url="user?.url_foto" />
                 </v-avatar>
               </v-col>
             </v-row>
@@ -65,24 +70,7 @@ defineProps({
                 </v-card>
               </v-col>
             </v-row>
-
-            <!-- Eliminar usuario (opcional) -->
-            <!--
-            <v-row justify="center">
-              <v-col cols="12" md="8">
-                <v-card elevation="2" rounded="xl" color="red-lighten-5">
-                  <v-card-title class="text-h6 font-weight-bold text-red-darken-2">
-                    Eliminar Cuenta
-                  </v-card-title>
-                  <v-divider></v-divider>
-                  <v-card-text>
-                    <DeleteUserForm />
-                  </v-card-text>
-                </v-card>
-              </v-col>
-            </v-row>
-            -->
-
+            
           </v-card>
         </v-col>
       </v-row>
@@ -91,7 +79,7 @@ defineProps({
 </template>
 
 <style>
- #dashboard-page .v-main{
+#dashboard-page .v-main {
   background-color: #3c4557;
- }
+}
 </style>
