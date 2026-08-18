@@ -9,7 +9,7 @@
 
 {{-- Contenido --}}
 <div style="text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';">
-    Hola <strong>{{ $user->name }}</strong>,<br><br>Tu contraseña ha sido reseteada por un administrador.<br><br>Tu nueva contraseña es: <strong>{{ $newPassword }}</strong><br><br>Te recomendamos encarecidamente que inicies sesión y cambies esta contraseña por una de tu elección lo antes posible desde tu perfil.<br><br>Gracias,<br>Unidad de Informática
+    Hola <strong>{{ $user->name }}</strong>,<br><br>Tu contraseña ha sido reseteada por un administrador.<br><br>Tu nueva contraseña es: <strong>{{ $newPassword }}</strong><br><br><a href="https://intranet.cifco.gob.sv/" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; margin: 10px 0;">Acceda aquí para ingresar al sistema</a><br><br>Te recomendamos encarecidamente que inicies sesión y cambies esta contraseña por una de tu elección lo antes posible desde tu perfil.<br><br>Gracias,<br>Unidad de Informática
 </div>
 
 </x-mail::message>

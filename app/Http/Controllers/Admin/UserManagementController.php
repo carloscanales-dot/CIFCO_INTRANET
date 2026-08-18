@@ -103,4 +103,52 @@ class UserManagementController extends Controller
 
         return Redirect::back()->with('success', 'Contraseña reseteada y enviada al usuario.');
     }
+
+    public function resetAllPasswords(Request $request)
+    {
+        // 1. Obtener todos los usuarios
+        $users = User::all();
+
+        $successCount = 0;
+        $failedCount = 0;
+        $errors = [];
+
+        // 2. Iterar sobre cada usuario y resetear su contraseña
+        foreach ($users as $user) {
+            try {
+                // Generar una contraseña aleatoria y segura
+                $newPassword = Str::random(10);
+
+                // Actualizar la contraseña del usuario en la base de datos
+                $user->password = Hash::make($newPassword);
+                $user->save();
+
+                // Enviar el correo electrónico al usuario con la nueva contraseña
+                try {
+                    Mail::to($user->email)->send(new PasswordResetNotification($user, $newPassword));
+                    $successCount++;
+                } catch (\Exception $e) {
+                    // Si falla el envío del correo, registrar el error pero continuar
+                    Log::error("Error al enviar correo a {$user->email}: " . $e->getMessage());
+                    $errors[] = "Error al enviar correo a: {$user->name} ({$user->email})";
+                    $failedCount++;
+                }
+            } catch (\Exception $e) {
+                // Si falla el reseteo de la contraseña, registrar el error
+                Log::error("Error al resetear contraseña de {$user->email}: " . $e->getMessage());
+                $errors[] = "Error al resetear contraseña de: {$user->name} ({$user->email})";
+                $failedCount++;
+            }
+        }
+
+        // 3. Preparar el mensaje de respuesta
+        if ($failedCount === 0) {
+            return Redirect::back()->with('success', "Todas las contraseñas fueron reseteadas exitosamente. Total: {$successCount} usuarios.");
+        } elseif ($successCount === 0) {
+            return Redirect::back()->with('error', 'No se pudo resetear ninguna contraseña. Revisa los logs para más detalles.');
+        } else {
+            $message = "Reseteo completado parcialmente. Éxitos: {$successCount}, Fallos: {$failedCount}. Revisa los logs para más detalles.";
+            return Redirect::back()->with('warning', $message);
+        }
+    }
 }

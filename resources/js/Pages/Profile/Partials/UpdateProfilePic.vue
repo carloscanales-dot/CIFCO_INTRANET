@@ -43,13 +43,13 @@ const props = defineProps({
 //   console.log('URL de la foto recibida en UpdateProfilePic.vue:', props.photoUrl);
 // });
 
-const defaultAvatar = '/pictures/default_avatar.jpg'
+const defaultAvatar = '/public/pictures/default_avatar.jpg'
 
 const profilePicture = computed(() => {
   if (props.photoUrl && props.photoUrl.trim() !== '') {
     // Construye la URL completa para la foto de perfil.
     // Asume que `photoUrl` es solo el nombre del archivo (ej: 'avatar.jpg')
-    return `/pictures/${props.photoUrl}`; 
+    return `/public/pictures/${props.photoUrl}`;
   }
   return defaultAvatar
 })

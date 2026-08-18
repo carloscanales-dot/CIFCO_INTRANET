@@ -8,6 +8,7 @@ use App\Models\Area;
 use App\Models\Cargo;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class AllUsersSeeder extends Seeder
 {
@@ -60,8 +61,13 @@ class AllUsersSeeder extends Seeder
                 $telefono = !empty(trim($row['telefono'] ?? ''))
                     ? trim($row['telefono'])
                     : null;
-                // Crear o actualizar usuario con rol_id = 2
-                User::updateOrCreate(
+
+                $url_foto = !empty(trim($row['foto'] ?? ''))
+                    ? trim($row['foto'])
+                    : null;
+
+                // Crear o actualizar usuario
+                $user = User::updateOrCreate(
                     ['email' => $email],
                     [
                         'name' => $row['nombre'],
@@ -70,15 +76,21 @@ class AllUsersSeeder extends Seeder
                         'sexo' => $row['sexo'] ?? null,
                         'fecha_nacimiento' => $fecha_nacimiento ?? null,
                         'telefono' => $telefono,
+                        'url_foto' => $url_foto,
                         'area_id' => $area->id,
                         'cargo_id' => $cargo->id,
-                        // 'role_id' => 2, // asigna el rol 2 a todos
                         'remember_token' => Str::random(10),
                         'email_verified_at' => now(),
                         'created_at' => now(),
                         'updated_at' => now(),
                     ]
                 );
+
+                // Asignar rol Empleado
+                $role = Role::where('name', 'Empleado')->first();
+                if ($role) {
+                    $user->assignRole($role);
+                }
             }
 
             fclose($handle);

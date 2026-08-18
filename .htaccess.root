@@ -1,0 +1,21 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Bloquear acceso a carpetas sensibles
+    RewriteRule ^(app|bootstrap|config|database|resources|routes|storage|tests|vendor)/.*$ - [F,L]
+
+    # Bloquear archivos sensibles
+    RewriteRule ^(\.env|\.git|composer\.json|composer\.lock|package\.json|artisan)$ - [F,L]
+</IfModule>
+
+# Denegar acceso directo a carpetas del framework
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Proteger archivos de configuración
+<FilesMatch "(composer\.json|composer\.lock|package\.json|\.env|artisan)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>

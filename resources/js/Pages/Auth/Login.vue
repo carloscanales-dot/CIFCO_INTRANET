@@ -60,7 +60,7 @@
 <style scoped>
 .login-bg {
   min-height: 100vh;
-  background-image: url('/img/fondo_bg.jpeg');
+  background-image: url('/public/img/fondo_bg.jpeg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;

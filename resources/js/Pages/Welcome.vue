@@ -18,10 +18,10 @@ defineProps({
     <!-- 🔷 AppBar elegante -->
     <v-app-bar app color="primary" dark flat>
   <v-container class="d-flex justify-space-between align-center">
-    
+
       <h2 class="text-h6 font-weight-bold">CIFCO INTRANET</h2>
       <v-img
-        src="/img/cifco-logo.png"
+        src="/public/img/cifco-logo.png"
         alt="CIFCO"
         max-height="80"
         contain
@@ -135,19 +135,19 @@ export default {
           icon: 'mdi-lifebuoy',
           title: 'Soporte Técnico',
           description: 'Gestione tickets y solicitudes de soporte de manera rápida y organizada.',
-          link: 'http://localhost:8000/construccion',
+          link: 'https://intranet.cifco.gob.sv/construccion',
         },
         {
           icon: 'mdi-truck',
           title: 'Gestión de Transporte',
           description: 'Administre flotas, rutas y seguimiento de vehículos institucionales.',
-          link: 'https://transporte.cifco.gob.sv/users/login',
+          link: 'https://transporte.cifco.gob.sv/',
         },
         {
           icon: 'mdi-file-document-multiple',
           title: 'Sistemas de Inventario',
           description: 'Controle el stock y gestión de inventarios con eficiencia y trazabilidad.',
-          link: 'http://localhost:8000/construccion',
+          link: 'https://inventario.cifco.gob.sv/login',
         },
         {
           icon: 'mdi-account-group',

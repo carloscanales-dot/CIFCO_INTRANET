@@ -19,8 +19,11 @@
                                 <div class="text-h6 font-weight-bold ">Usuarios</div>
                             </v-col>
 
-                            <!-- Botón a la derecha -->
-                            <v-col cols="12" md="6" class="d-flex justify-end">
+                            <!-- Botones a la derecha -->
+                            <v-col cols="12" md="6" class="d-flex justify-end gap-2">
+                                <v-btn @click="openResetAllDialog" prepend-icon="mdi-lock-reset" color="warning">
+                                    Resetear Todas las Contraseñas
+                                </v-btn>
                                 <v-btn @click="openCreateDialog" prepend-icon="mdi-account-plus" color="primary">
                                     Crear Usuario
                                 </v-btn>
@@ -29,7 +32,7 @@
                             <!-- Campo de búsqueda debajo -->
                             <v-col cols="12" class="mt-2">
                                 <v-text-field v-model="search" append-inner-icon="mdi-magnify" label="Buscar"
-                                    single-line hide-details variant="solo"></v-text-field>
+                                    single-line hide-details clearable variant="solo"></v-text-field>
                             </v-col>
                         </v-row>
                     </v-card-title>
@@ -164,6 +167,37 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+
+        <!-- Dialogo para resetear todas las contraseñas -->
+        <v-dialog v-model="resetAllDialog" max-width="600px">
+            <v-card>
+                <v-card-title class="bg-warning">
+                    <v-icon start icon="mdi-alert" color="white"></v-icon>
+                    <span class="text-h6 font-weight-bold text-white">Resetear Todas las Contraseñas</span>
+                </v-card-title>
+                <v-divider></v-divider>
+                <v-card-text class="pt-4">
+                    <v-alert type="warning" variant="tonal" class="mb-4">
+                        <strong>¡ADVERTENCIA!</strong> Esta acción afectará a todos los usuarios del sistema.
+                    </v-alert>
+                    <p class="mb-3">¿Estás seguro de que deseas resetear las contraseñas de <strong>TODOS</strong> los usuarios?</p>
+                    <p class="mb-3">Se realizarán las siguientes acciones:</p>
+                    <ul class="ml-4 mb-3">
+                        <li>Se generará una nueva contraseña aleatoria para cada usuario</li>
+                        <li>Se enviará un correo electrónico a cada usuario con su nueva contraseña</li>
+                        <li>Total de usuarios afectados: <strong>{{ users.length }}</strong></li>
+                    </ul>
+                    <p class="text-error font-weight-bold">Esta acción no se puede deshacer.</p>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn text @click="closeResetAllDialog">Cancelar</v-btn>
+                    <v-btn variant="elevated" color="warning" @click="confirmResetAllPasswords" :loading="isResettingAll">
+                        Sí, Resetear Todas
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </AuthenticatedLayout>
 </template>
 
@@ -188,6 +222,8 @@ const allRoles = ref(props.roles) // aquí cargo los roles de Spatie
 const allAreas = ref(props.areas);
 const allCargos = ref(props.cargos);
 const isResetting = ref(false)
+const resetAllDialog = ref(false)
+const isResettingAll = ref(false)
 const createDialog = ref(false);
 const createFormRef = ref(null); // Referencia para el v-form de creación
 const isCreateFormValid = ref(false);
@@ -302,6 +338,27 @@ const saveCreate = () => {
     router.post(route('users.store'), newUser, {
         onSuccess: () => closeCreateDialog(),
         onError: (errors) => console.error(errors),
+    })
+}
+
+const openResetAllDialog = () => {
+    resetAllDialog.value = true
+}
+
+const closeResetAllDialog = () => {
+    resetAllDialog.value = false
+    isResettingAll.value = false
+}
+
+const confirmResetAllPasswords = () => {
+    isResettingAll.value = true
+    router.post(route('users.reset-all-passwords'), {}, {
+        onSuccess: () => {
+            closeResetAllDialog()
+        },
+        onFinish: () => {
+            isResettingAll.value = false
+        }
     })
 }
 </script>

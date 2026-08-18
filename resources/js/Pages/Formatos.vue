@@ -50,27 +50,38 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
-const formatos = [
+// Función helper para codificar URLs correctamente
+const encodeUrl = (url) => {
+  return url.split('/').map(segment => encodeURIComponent(segment)).join('/');
+};
+
+const formatosRaw = [
   {
     title: 'Misión Oficial',
     description: 'Formato utilizado para solicitar una misión oficial y salida por trabajo.',
-    href: '/docs/FORMATOS/Formulario mision oficial.pdf',
+    href: '/public/docs/FORMATOS/Formulario mision oficial.pdf',
     icon: 'mdi-file-document-outline',
   },
   {
     title: 'Permisos',
     description: 'Formato utilizado para solicitar permisos para ausencias o licencias.',
-    href: '/docs/FORMATOS/Formulario permisos 2025.pdf',
+    href: '/public/docs/FORMATOS/Formulario permisos 2025.pdf',
     icon: 'mdi-file-clock-outline',
   },
   {
     title: 'Salida de Equipo',
     description: 'Formato utilizado para solicitar la salida de equipo de la organización.',
-    href: '/docs/FORMATOS/FORMATO CONTROL DE SALIDA DE MOBILIARIO Y EQUIPO AF Y AD.xlsx',
+    href: '/public/docs/FORMATOS/FORMATO CONTROL DE SALIDA DE MOBILIARIO Y EQUIPO AF Y AD.xlsx',
     icon: 'mdi-file-export-outline',
   },
 ];
+
+// Codificar las URLs correctamente
+const formatos = computed(() =>
+  formatosRaw.map(f => ({ ...f, href: encodeUrl(f.href) }))
+);
 </script>
 <style scoped>
 #dashboard-page .v-main {

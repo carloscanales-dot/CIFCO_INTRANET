@@ -122,9 +122,9 @@ const page = usePage();
 const userAvatar = computed(() => {
   const photoUrl = page.props.auth.user?.url_foto;
   if (photoUrl) {
-    return `/pictures/${photoUrl}`;
+    return `/public/pictures/${photoUrl}`;
   }
   // La imagen por defecto que solicitaste
-  return '/pictures/default_picture.png';
+  return '/public/pictures/default_picture.png';
 });
 </script>

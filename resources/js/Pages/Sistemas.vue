@@ -22,7 +22,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
                 <v-row justify="center" align="stretch" dense>
                     <v-col cols="12" sm="6" md="4" class="d-flex">
                         <v-card class="flex-grow-1 pa-6 text-center hover-elevate" elevation="4" rounded="xl"
-                            clickable to="/soporte-tecnico">
+                            href="https://intranet.cifco.gob.sv/construccion" target="_blank">
                             <v-icon size="52" color="primary">mdi-lifebuoy</v-icon>
                             <h3 class="mt-3 mb-2 text-h6 font-weight-bold" style="color: #1976d2;">Soporte técnico</h3>
                             <p class="text-body-2">Para agilizar las solicitudes de soporte y brindarle un mejor
@@ -31,7 +31,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
                     </v-col>
                     <v-col cols="12" sm="6" md="4" class="d-flex">
                         <v-card class="flex-grow-1 pa-6 text-center hover-elevate" elevation="4" rounded="xl"
-                            href="https://transporte.cifco.gob.sv/users/login" target="_blank">
+                            href="https://transporte.cifco.gob.sv/" target="_blank">
                             <v-icon size="52" color="primary">mdi-truck</v-icon>
                             <h3 class="mt-3 mb-2 text-h6 font-weight-bold" style="color: #1976d2;">Gestión de Transporte
                             </h3>
@@ -41,7 +41,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
                     </v-col>
                     <v-col cols="12" sm="6" md="4" class="d-flex">
                         <v-card class="flex-grow-1 pa-6 text-center hover-elevate" elevation="4" rounded="xl"
-                            href="https://documental.cifco.gob.sv" target="_blank">
+                            href="https://inventario.cifco.gob.sv/login" target="_blank">
                             <v-icon size="52" color="primary">mdi-file-document-multiple</v-icon>
                             <h3 class="mt-3 mb-2 text-h6 font-weight-bold" style="color: #1976d2;">Sistemas de
                                 inventario</h3>
@@ -60,7 +60,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
                     </v-col>
                     <v-col cols="12" sm="6" md="4" class="d-flex">
                         <v-card class="flex-grow-1 pa-6 text-center hover-elevate" elevation="4" rounded="xl"
-                            href="https://marcacion.cifco.gob.sv" target="_blank">
+                            href="https://marcaciones.cifco.gob.sv" target="_blank">
                             <v-icon size="52" color="primary">mdi-account-clock</v-icon>
                             <h3 class="mt-3 mb-2 text-h6 font-weight-bold" style="color: #1976d2;">Sistema de marcación
                             </h3>

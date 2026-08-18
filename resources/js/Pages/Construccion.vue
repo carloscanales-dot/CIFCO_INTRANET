@@ -50,7 +50,7 @@ defineProps({
               </v-btn>
             </v-col>
             <v-col cols="12" md="6" class="d-flex align-center justify-center">
-              <img src="/img/intro-img.svg" alt="Intro" style="max-width: 100%; height: auto;" />
+              <img src="/public/img/intro-img.svg" alt="Intro" style="max-width: 100%; height: auto;" />
             </v-col>
           </v-row>
         </v-container>
